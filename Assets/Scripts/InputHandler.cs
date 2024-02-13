@@ -1,13 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.XR.Interaction.Toolkit;
 
 public class InputHandler : MonoBehaviour
 {
-    public InputActionReference leftHandPress;
-    public InputActionReference rightHandPress;
+    [SerializeField] InputActionReference leftHandPress;
+    [SerializeField] InputActionReference rightHandPress;
+    [SerializeField] WebHandler leftWebHandler;
+    [SerializeField] WebHandler rightWebHandler;
 
     void Awake()
     {
@@ -19,11 +18,11 @@ public class InputHandler : MonoBehaviour
 
     private void LeftHandPress(InputAction.CallbackContext obj)
     {
-        Debug.Log("Left Hand" + obj.ReadValue<float>());
+        leftWebHandler.OnWebInput(obj.ReadValue<float>() > .5f);
     }
 
     private void RightHandPress(InputAction.CallbackContext obj)
     {
-        Debug.Log("Right Hand" + obj.ReadValue<float>());
+        rightWebHandler.OnWebInput(obj.ReadValue<float>() > .5f);
     }
 }
