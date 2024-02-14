@@ -22,9 +22,9 @@ public class TimeAttackHandler : MonoBehaviour
     [SerializeField]
     List<Waypoint> waypoints;
 
-    private void Start()
+    private void Awake()
     {
-        player = FindObjectOfType<InputHandler>().gameObject;
+        //player = FindObjectOfType<InputHandler>().gameObject;
         LoadRaceCourse();
     }
 
@@ -32,8 +32,8 @@ public class TimeAttackHandler : MonoBehaviour
     {
         if(waypoints.Count > 0)
         {
-            lineRenderer.SetPosition(0, new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z));
-            lineRenderer.SetPosition(1, new Vector3(waypoints[0].transform.position.x, waypoints[0].transform.position.y, waypoints[0].transform.position.z));
+            //lineRenderer.SetPosition(0, new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z));
+            //lineRenderer.SetPosition(1, new Vector3(waypoints[0].transform.position.x, waypoints[0].transform.position.y, waypoints[0].transform.position.z));
         }
     }
 
@@ -44,12 +44,12 @@ public class TimeAttackHandler : MonoBehaviour
         {
             Destroy(waypoints[0].gameObject);
             waypoints.RemoveAt(0);
-            Debug.Log("Right waypoint !");
+            FindObjectOfType<AudioManager>().PlayOneShot("RightWaypoint");
             waypoints[0].nextInRace = true;
         }
         else
         {
-            Debug.Log("Wrong waypoint !");
+            FindObjectOfType<AudioManager>().PlayOneShot("WrongWaypoint");
         }
     }
 
