@@ -358,6 +358,8 @@ MonoBehaviour:
   lr: {fileID: 2930794462677536561}
   pullTolerance: 10
   pullStrength: 1
+  minPullDistance: 1
+  textMeshProUGUI: {fileID: 0}
 --- !u!1 &1670256624
 GameObject:
   m_ObjectHideFlags: 0
@@ -716,6 +718,8 @@ MonoBehaviour:
   lr: {fileID: 482778756031005187}
   pullTolerance: 10
   pullStrength: 1
+  minPullDistance: 1
+  textMeshProUGUI: {fileID: 0}
 --- !u!1 &1680501586
 GameObject:
   m_ObjectHideFlags: 0
