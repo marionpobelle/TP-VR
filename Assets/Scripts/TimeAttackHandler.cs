@@ -12,6 +12,9 @@ public class TimeAttackHandler : MonoBehaviour
 
     [SerializeField]
     Waypoint prefabWaypoint;
+    [SerializeField]
+    LineRenderer lineRenderer;
+    GameObject player;
 
     [SerializeField]
     float defaultWaypointRadius = 1.0f;
@@ -21,8 +24,19 @@ public class TimeAttackHandler : MonoBehaviour
 
     private void Start()
     {
+        player = FindObjectOfType<InputHandler>().gameObject;
         LoadRaceCourse();
     }
+
+    private void Update()
+    {
+        if(waypoints.Count > 0)
+        {
+            lineRenderer.SetPosition(0, new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z));
+            lineRenderer.SetPosition(1, new Vector3(waypoints[0].transform.position.x, waypoints[0].transform.position.y, waypoints[0].transform.position.z));
+        }
+    }
+
     public void OnWaypointCrossed(Waypoint crossedWaypoint)
     {
         //verifier si c'est le premier waypoint de la liste de l'handler
