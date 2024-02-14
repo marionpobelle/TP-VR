@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 using TMPro;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class WebHandler : MonoBehaviour
 {
@@ -32,11 +33,17 @@ public class WebHandler : MonoBehaviour
     Vector3 lastRecordedPos;
     Vector3 lastRecordedLocalPos;
 
+    //Haptic feedback
+    private XRController xr;
+
     private void Awake()
     {
         target.transform.parent = null;
         lr.transform.parent = null;
         lr.transform.position = Vector3.zero;
+
+        //Haptic feedback
+        xr = (XRController)GameObject.FindObjectOfType(typeof(XRController));
     }
 
     private void Update()
@@ -65,6 +72,8 @@ public class WebHandler : MonoBehaviour
                 playerRigidbody.AddForce(force, ForceMode.Force);
                 lastRecordedPos = transform.position;
                 lastRecordedLocalPos = transform.localPosition;
+                //Haptic feedback
+                ActivateHaptic();
             }
         }
     }
@@ -140,5 +149,10 @@ public class WebHandler : MonoBehaviour
         isWebOut = false;
         isHoldingWeb = false;
         Destroy(joint);
+    }
+
+    void ActivateHaptic()
+    {
+        xr.SendHapticImpulse(0.7f, 1f);
     }
 }
