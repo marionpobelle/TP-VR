@@ -13,30 +13,36 @@ public class WebHandler : MonoBehaviour
     [SerializeField] Rigidbody target;
 
     [Header("WebSettings")]
-    public float webStrength = 8.5f;
-    public float webDamper = 7f;
-    public float webMassScale = 4.5f;
-    public float webZipStrength = 5f;
-    public float maxDistance = 150f;
-    public LayerMask webMask;
+    [SerializeField] float webStrength = 8.5f;
+    [SerializeField] float webDamper = 7f;
+    [SerializeField] float webMassScale = 4.5f;
+    [SerializeField] float webZipStrength = 5f;
+    [SerializeField] float maxDistance = 150f;
+    [SerializeField] LayerMask webMask;
+    [SerializeField] LineRenderer lr;
 
     bool isWebOut = false;
 
     private void Awake()
     {
         target.transform.parent = null;
+        lr.transform.parent = null;
+        lr.transform.position = Vector3.zero;
     }
 
     private void Update()
     {
         if (!isWebOut)
         {
+            
             SetTargetAtRaycast();
             Debug.DrawLine(raycastOrigin.position, raycastOrigin.position + raycastOrigin.forward * maxDistance, Color.blue);
         }
         else
         {
-            Debug.DrawLine(raycastOrigin.position, target.position, Color.red);
+            Debug.DrawLine(raycastOrigin.position, target.position, Color.red); 
+            lr.SetPosition(0, raycastOrigin.position);
+            lr.SetPosition(1, target.position);
         }
     }
 
@@ -75,13 +81,17 @@ public class WebHandler : MonoBehaviour
             joint = playerRigidbody.AddComponent<SpringJoint>();
 
             joint.autoConfigureConnectedAnchor = false;
-            joint.connectedBody = target; 
+            joint.connectedBody = target;
             joint.spring = webStrength;
             joint.damper = webDamper;
-            joint.massScale = webMassScale; 
+            joint.massScale = webMassScale;
             joint.minDistance = 0;
             joint.maxDistance = Vector3.Distance(target.position, joint.transform.position);
             isWebOut = true;
+
+            lr.enabled = true;
+            lr.SetPosition(0, raycastOrigin.position);
+            lr.SetPosition(1, target.position);
         }
         else
         {
@@ -91,6 +101,7 @@ public class WebHandler : MonoBehaviour
 
     private void ResetWeb()
     {
+        lr.enabled = false;
         isWebOut = false;
         Destroy(joint);
     }
