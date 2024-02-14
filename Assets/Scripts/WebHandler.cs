@@ -1,4 +1,3 @@
-using NaughtyAttributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,6 +12,7 @@ public class WebHandler : MonoBehaviour
     [SerializeField] Transform raycastOrigin;
     [SerializeField] Rigidbody playerRigidbody;
     [SerializeField] Rigidbody target;
+    [SerializeField] Animator animator;
 
     [Header("WebSettings")]
     [SerializeField] float webStrength = 8.5f;
@@ -101,9 +101,14 @@ public class WebHandler : MonoBehaviour
 
         if (isHoldingWeb)
         {
+            animator.SetBool("IsHolding", true);
             pullStartPos = transform.localPosition;
             lastRecordedPos = transform.position;
             lastRecordedLocalPos = transform.localPosition;
+        }
+        else
+        {
+            animator.SetBool("IsHolding", false);
         }
     }
 
@@ -127,6 +132,7 @@ public class WebHandler : MonoBehaviour
             lr.enabled = true;
             lr.SetPosition(0, raycastOrigin.position);
             lr.SetPosition(1, target.position);
+            animator.SetBool("IsWebOut", true);
         }
         else
         {
@@ -136,6 +142,8 @@ public class WebHandler : MonoBehaviour
 
     private void ResetWeb()
     {
+        animator.SetBool("IsWebOut", false);
+        animator.SetBool("IsHolding", false);
         lr.enabled = false;
         isWebOut = false;
         isHoldingWeb = false;
