@@ -31,6 +31,7 @@ public class TimeAttackHandler : MonoBehaviour
             Destroy(waypoints[0].gameObject);
             waypoints.RemoveAt(0);
             Debug.Log("Right waypoint !");
+            waypoints[0].nextInRace = true;
         }
         else
         {
@@ -51,6 +52,7 @@ public class TimeAttackHandler : MonoBehaviour
             newWaypoint.transform.position = waypointData.Position;
             waypoints.Add(newWaypoint);
         }
+        waypoints[0].nextInRace = true;
     }
 
 #if UNITY_EDITOR

@@ -12,9 +12,25 @@ public class Waypoint : MonoBehaviour
     public CapsuleCollider waypointCollider;
     public TimeAttackHandler handler;
 
+    public bool nextInRace = false;
+    [SerializeField]
+    GameObject particles;
+
     private void OnTriggerEnter(Collider other)
     {
         handler.OnWaypointCrossed(this);
+    }
+
+    private void Update()
+    {
+        if(nextInRace == true)
+        {
+            particles.SetActive(true);
+        }
+        else
+        {
+            particles.SetActive(false);
+        }
     }
 
 #if UNITY_EDITOR
