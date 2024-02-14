@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
+using TMPro;
 
 public class WebHandler : MonoBehaviour
 {
@@ -21,8 +22,15 @@ public class WebHandler : MonoBehaviour
     [SerializeField] float maxDistance = 150f;
     [SerializeField] LayerMask webMask;
     [SerializeField] LineRenderer lr;
+    [SerializeField] float pullTolerance = 10f;
+    [SerializeField] float pullStrength = 1f;
 
     bool isWebOut = false;
+    bool isHoldingWeb = false;
+    Vector3 lastRecordedPos;
+    Vector3 lastRecordedLocalPos;
+
+    [SerializeField]TextMeshProUGUI textMeshProUGUI;
 
     private void Awake()
     {
@@ -31,11 +39,12 @@ public class WebHandler : MonoBehaviour
         lr.transform.position = Vector3.zero;
     }
 
+    Vector3 lastAppliedForce;
+
     private void Update()
     {
         if (!isWebOut)
         {
-            
             SetTargetAtRaycast();
             Debug.DrawLine(raycastOrigin.position, raycastOrigin.position + raycastOrigin.forward * maxDistance, Color.blue);
         }
@@ -45,7 +54,41 @@ public class WebHandler : MonoBehaviour
             lr.SetPosition(0, raycastOrigin.position);
             lr.SetPosition(1, target.position);
         }
-    }
+
+            string text = "";
+        if (textMeshProUGUI != null)
+        {
+
+            text += "Is Web Out : " + (isWebOut ? "true" : false);
+            text += "\nIs holding : " + (isHoldingWeb ? "true" : false);
+            text += "\nIs pulling : " + (Vector3.Distance(transform.position, target.position) > Vector3.Distance(lastRecordedPos, target.position) ? "true" : false);
+            text += "\nIs In Tolerance : " + (Vector3.Distance(playerRigidbody.transform.position, target.position) < pullTolerance ? "true" : false);
+
+        }
+
+        if (isWebOut && isHoldingWeb)
+        {
+            //if we are pulling && if we are close to the max distance of the joint
+            if (Vector3.Distance(transform.position, target.position) > Vector3.Distance(lastRecordedPos, target.position)
+                && (Vector3.Distance(playerRigidbody.transform.position, target.position) > joint.maxDistance - pullTolerance
+                && Vector3.Distance(playerRigidbody.transform.position, target.position) < joint.maxDistance + pullTolerance))
+            {
+                Vector3 force = (target.position - playerRigidbody.transform.position).normalized *  (transform.position.y > target.position.y ? -1 : 1 )*Vector3.Dot(target.position - playerRigidbody.transform.position, lastRecordedLocalPos) * pullStrength;
+                lastAppliedForce = force;
+                playerRigidbody.AddForce(force, ForceMode.Force);
+                lastRecordedPos = transform.position;
+                lastRecordedLocalPos = transform.localPosition;
+            }
+        }
+
+        if (textMeshProUGUI != null)
+        {
+            text += "\nLastAppliedForce : " + lastAppliedForce;
+            textMeshProUGUI.text = text;
+        }
+
+
+        }
 
     private void SetTargetAtRaycast()
     {
@@ -70,6 +113,17 @@ public class WebHandler : MonoBehaviour
         else
         {
             ResetWeb();
+        }
+    }
+
+    public void OnHoldInput(bool isHolding)
+    {
+        isHoldingWeb = isWebOut && isHolding;
+
+        if (isHoldingWeb)
+        {
+            lastRecordedPos = transform.position;
+            lastRecordedLocalPos = transform.localPosition;
         }
     }
 
@@ -104,6 +158,7 @@ public class WebHandler : MonoBehaviour
     {
         lr.enabled = false;
         isWebOut = false;
-        Destroy(joint);
+        isHoldingWeb = false;
+        Destroy(joint); 
     }
 }
