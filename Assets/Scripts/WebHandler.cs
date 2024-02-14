@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
+using TMPro;
 
 public class WebHandler : MonoBehaviour
 {
@@ -21,8 +22,15 @@ public class WebHandler : MonoBehaviour
     [SerializeField] float maxDistance = 150f;
     [SerializeField] LayerMask webMask;
     [SerializeField] LineRenderer lr;
+    [SerializeField] float pullTolerance = 10f;
+    [SerializeField] float pullStrength = 1f;
+    [SerializeField] float minPullDistance = 1f;
 
     bool isWebOut = false;
+    bool isHoldingWeb = false;
+    Vector3 pullStartPos;
+    Vector3 lastRecordedPos;
+    Vector3 lastRecordedLocalPos;
 
     private void Awake()
     {
@@ -35,15 +43,29 @@ public class WebHandler : MonoBehaviour
     {
         if (!isWebOut)
         {
-            
             SetTargetAtRaycast();
             Debug.DrawLine(raycastOrigin.position, raycastOrigin.position + raycastOrigin.forward * maxDistance, Color.blue);
         }
         else
         {
-            Debug.DrawLine(raycastOrigin.position, target.position, Color.red); 
+            Debug.DrawLine(raycastOrigin.position, target.position, Color.red);
             lr.SetPosition(0, raycastOrigin.position);
             lr.SetPosition(1, target.position);
+        }
+
+        if (isWebOut && isHoldingWeb)
+        {
+            //if we are pulling && if we are close to the max distance of the joint
+            if (Vector3.Distance(transform.position, target.position) > Vector3.Distance(lastRecordedPos, target.position)
+                && (Vector3.Distance(playerRigidbody.transform.position, target.position) > joint.maxDistance - pullTolerance
+                && Vector3.Distance(playerRigidbody.transform.position, target.position) < joint.maxDistance + pullTolerance)
+                && Vector3.Distance(pullStartPos, transform.localPosition) > minPullDistance)
+            {
+                Vector3 force = (target.position - playerRigidbody.transform.position).normalized * Vector3.Dot(target.position - playerRigidbody.transform.position, lastRecordedLocalPos - transform.localPosition) * pullStrength;
+                playerRigidbody.AddForce(force, ForceMode.Force);
+                lastRecordedPos = transform.position;
+                lastRecordedLocalPos = transform.localPosition;
+            }
         }
     }
 
@@ -70,6 +92,18 @@ public class WebHandler : MonoBehaviour
         else
         {
             ResetWeb();
+        }
+    }
+
+    public void OnHoldInput(bool isHolding)
+    {
+        isHoldingWeb = isWebOut && isHolding;
+
+        if (isHoldingWeb)
+        {
+            pullStartPos = transform.localPosition;
+            lastRecordedPos = transform.position;
+            lastRecordedLocalPos = transform.localPosition;
         }
     }
 
@@ -104,6 +138,7 @@ public class WebHandler : MonoBehaviour
     {
         lr.enabled = false;
         isWebOut = false;
+        isHoldingWeb = false;
         Destroy(joint);
     }
 }
