@@ -9,6 +9,7 @@ public class FallOutHandler : MonoBehaviour
     public static event Action OnPlayerFall;
 
     Transform playerTransform;
+    Rigidbody rb;
     [SerializeField]
     float fallHeightThreshold = -50.0f;
 
@@ -21,6 +22,7 @@ public class FallOutHandler : MonoBehaviour
     private void Awake()
     {
         playerTransform = FindObjectOfType<InputHandler>().transform;
+        rb = playerTransform.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -28,7 +30,7 @@ public class FallOutHandler : MonoBehaviour
     {
         if(playerTransform.position.y < fallHeightThreshold)
         {
-            if (!leftWebHandler.isHoldingWeb && !rightWebHandler.isHoldingWeb)
+            if (!leftWebHandler.isWebOut && !rightWebHandler.isWebOut)
             {
                 Transform closestSpawnTransform = spawnPoints[0];
                 float closestDistance = EuclidianDistance(playerTransform, spawnPoints[0]);
@@ -43,6 +45,7 @@ public class FallOutHandler : MonoBehaviour
                 }
                 OnPlayerFall?.Invoke();
                 playerTransform.position = closestSpawnTransform.position;
+                rb.velocity = Vector3.zero;
             }
         }
     }
