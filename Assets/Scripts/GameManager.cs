@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set;}
     public UIScript UI;
     private float _timer;
-    public bool _isRacing { get; private set; }
+    public bool isRacing { get; private set; }
 
     void Awake()
     {
@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(_isRacing)
+        if(isRacing)
         {
             _timer += Time.deltaTime;
             UI.SetTimer(_timer);
@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
 
     public void ToggleRacing(bool state)
     {
-        _isRacing = state;
+        isRacing = state;
         _timer = 0;
         _timer = 0;
         UI.SetTimer(_timer);

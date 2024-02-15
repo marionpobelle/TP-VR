@@ -20,6 +20,7 @@ public class TimeAttackHandler : MonoBehaviour
     List<Waypoint> waypoints;
     AudioManager audioManager;
 
+
     bool isRaceStarted = false;
     int currentWaypointIndex;
 
@@ -33,6 +34,11 @@ public class TimeAttackHandler : MonoBehaviour
     [Button]
     public void StartRace()
     {
+        if(GameManager.Instance.isRacing)
+        {
+            return;
+        }
+        GameManager.Instance.ToggleRacing(true);
         isRaceStarted = true;
         EnableWaypoint(0);
         Debug.Log("Race is starting");
@@ -40,6 +46,11 @@ public class TimeAttackHandler : MonoBehaviour
 
     void OnRaceOver()
     {
+        if (!GameManager.Instance.isRacing)
+        {
+            return;
+        }
+        GameManager.Instance.ToggleRacing(false);
         isRaceStarted = false;
         Debug.Log("Race is over");
     }
