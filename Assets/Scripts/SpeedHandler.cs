@@ -10,7 +10,7 @@ public class SpeedHandler : MonoBehaviour
     AudioManager audioManager;
 
     float currentWindVolume = 0;
-    float minSpeed = 0;
+    [SerializeField] float minSpeed = 0;
     [SerializeField] float maxSpeed = 100;
 
     private void Awake()

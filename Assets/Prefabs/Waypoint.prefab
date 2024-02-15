@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5134598777156787140}
   - component: {fileID: 2747008378286154794}
   - component: {fileID: 2296622788188478854}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Waypoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 3873310977036151732}
   - component: {fileID: 6450481748095491488}
   - component: {fileID: 8805155196029789382}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
