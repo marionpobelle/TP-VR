@@ -15,6 +15,9 @@ public class FallOutHandler : MonoBehaviour
     [SerializeField]
     List<Transform> spawnPoints;
 
+    [SerializeField] WebHandler leftWebHandler;
+    [SerializeField] WebHandler rightWebHandler;
+
     private void Awake()
     {
         playerTransform = FindObjectOfType<InputHandler>().transform;
@@ -23,22 +26,24 @@ public class FallOutHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(playerTransform.position.y < fallHeightThreshold /*** && on est pas accroché***/)
+        if(playerTransform.position.y < fallHeightThreshold)
         {
-            Transform closestSpawnTransform = spawnPoints[0];
-            float closestDistance = EuclidianDistance(playerTransform, spawnPoints[0]);
-            float tempDistance;
-            foreach( Transform t in spawnPoints )
+            if (!leftWebHandler.isHoldingWeb && !rightWebHandler.isHoldingWeb)
             {
-                tempDistance = EuclidianDistance(playerTransform, t);
-                if(tempDistance < closestDistance )
+                Transform closestSpawnTransform = spawnPoints[0];
+                float closestDistance = EuclidianDistance(playerTransform, spawnPoints[0]);
+                float tempDistance;
+                foreach( Transform t in spawnPoints )
                 {
-                    closestSpawnTransform = t;
+                    tempDistance = EuclidianDistance(playerTransform, t);
+                    if(tempDistance < closestDistance )
+                    {
+                        closestSpawnTransform = t;
+                    }
                 }
+                OnPlayerFall?.Invoke();
+                playerTransform.position = closestSpawnTransform.position;
             }
-            OnPlayerFall?.Invoke();
-            playerTransform.position = closestSpawnTransform.position;
-
         }
     }
 

@@ -27,7 +27,7 @@ public class WebHandler : MonoBehaviour
     [SerializeField] float minPullDistance = 1f;
 
     bool isWebOut = false;
-    bool isHoldingWeb = false;
+    public bool isHoldingWeb{ get; private set; }
     Vector3 pullStartPos;
     Vector3 lastRecordedPos;
     Vector3 lastRecordedLocalPos;
@@ -36,6 +36,7 @@ public class WebHandler : MonoBehaviour
 
     private void Awake()
     {
+        isHoldingWeb = false;
         target.transform.parent = null;
         lr.transform.parent = null;
         lr.transform.position = Vector3.zero;
