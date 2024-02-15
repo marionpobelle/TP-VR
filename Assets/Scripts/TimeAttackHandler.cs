@@ -44,6 +44,7 @@ public class TimeAttackHandler : MonoBehaviour
         Debug.Log("Race is starting");
     }
 
+    [Button]
     void OnRaceOver()
     {
         if (!GameManager.Instance.isRacing)

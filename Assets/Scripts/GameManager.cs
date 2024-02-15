@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set;}
     public UIScript UI;
     private float _timer;
-    public bool isRacing { get; private set; }
+    public bool isRacing { get; private set; } = false;
 
     void Awake()
     {
@@ -44,5 +44,6 @@ public class GameManager : MonoBehaviour
         _timer = 0;
         UI.SetTimer(_timer);
         UI.ToggleTimer(state);
+        RaceStarter.ToggleVisibilityAll(!state);
     }
 }
