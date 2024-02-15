@@ -24,6 +24,7 @@ public class WebHandler : MonoBehaviour
     [SerializeField] float maxDistance = 150f;
     [SerializeField] LayerMask webMask;
     [SerializeField] LineRenderer lr;
+    [SerializeField] LineRenderer previewLR;
     [SerializeField] float pullTolerance = 10f;
     [SerializeField] float pullStrength = 1f;
     [SerializeField] float minPullDistance = 1f;
@@ -43,6 +44,8 @@ public class WebHandler : MonoBehaviour
         target.transform.parent = null;
         lr.transform.parent = null;
         lr.transform.position = Vector3.zero;
+        previewLR.transform.parent = null;
+        previewLR.transform.position = Vector3.zero;
 
         audioManager = FindObjectOfType<AudioManager>();
     }
@@ -52,7 +55,6 @@ public class WebHandler : MonoBehaviour
         if (!isWebOut)
         {
             SetTargetAtRaycast();
-            Debug.DrawLine(raycastOrigin.position, raycastOrigin.position + raycastOrigin.forward * maxDistance, Color.blue);
         }
         else
         {
@@ -86,7 +88,22 @@ public class WebHandler : MonoBehaviour
 
     private void SetTargetAtRaycast()
     {
-        target.position = GetRaycastHit().point;
+        RaycastHit hit = GetRaycastHit();
+        if (hit.collider != null)
+        {
+            previewLR.startColor = Color.green;
+            previewLR.endColor = Color.green;
+            target.position = GetRaycastHit().point;
+            previewLR.SetPosition(0, raycastOrigin.position);
+            previewLR.SetPosition(1, target.position);
+        }
+        else
+        {
+            previewLR.startColor = Color.red;
+            previewLR.endColor = Color.red;
+            previewLR.SetPosition(0, raycastOrigin.position);
+            previewLR.SetPosition(1, raycastOrigin.position + raycastOrigin.forward * maxDistance);
+        }
     }
 
     public RaycastHit GetRaycastHit()
@@ -148,6 +165,7 @@ public class WebHandler : MonoBehaviour
             lr.SetPosition(0, raycastOrigin.position);
             lr.SetPosition(1, target.position);
             animator.SetBool("IsWebOut", true);
+            previewLR.enabled = false;
 
             int randWebSound = UnityEngine.Random.Range(0, 5);
             audioManager.PlayOneShot("Web" + randWebSound);
@@ -165,6 +183,7 @@ public class WebHandler : MonoBehaviour
         lr.enabled = false;
         isWebOut = false;
         isHoldingWeb = false;
+        previewLR.enabled = true;
         Destroy(joint);
     }
 }
