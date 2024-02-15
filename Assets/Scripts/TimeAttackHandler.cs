@@ -12,51 +12,71 @@ public class TimeAttackHandler : MonoBehaviour
 
     [SerializeField]
     Waypoint prefabWaypoint;
-    [SerializeField]
-    LineRenderer lineRenderer;
-    GameObject player;
 
     [SerializeField]
     float defaultWaypointRadius = 1.0f;
 
     [SerializeField]
     List<Waypoint> waypoints;
+    AudioManager audioManager;
+
+    bool isRaceStarted = false;
+    int currentWaypointIndex;
 
     private void Awake()
     {
-        //player = FindObjectOfType<InputHandler>().gameObject;
         LoadRaceCourse();
+
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
-    private void Update()
+    [Button]
+    public void StartRace()
     {
-        if(waypoints.Count > 0)
-        {
-            //lineRenderer.SetPosition(0, new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z));
-            //lineRenderer.SetPosition(1, new Vector3(waypoints[0].transform.position.x, waypoints[0].transform.position.y, waypoints[0].transform.position.z));
-        }
+        isRaceStarted = true;
+        EnableWaypoint(0);
+        Debug.Log("Race is starting");
+    }
+
+    void OnRaceOver()
+    {
+        isRaceStarted = false;
+        Debug.Log("Race is over");
     }
 
     public void OnWaypointCrossed(Waypoint crossedWaypoint)
     {
-        //verifier si c'est le premier waypoint de la liste de l'handler
-        if (waypoints[0] == crossedWaypoint)
+        int crossedWaypointIndex = waypoints.IndexOf(crossedWaypoint);
+        Debug.Log($"Crossed waypoint {crossedWaypointIndex}");
+        DisableWaypoint(crossedWaypointIndex);
+        audioManager.PlayOneShot("RightWaypoint");
+
+        if (crossedWaypointIndex >= waypoints.Count - 1)
         {
-            Destroy(waypoints[0].gameObject);
-            waypoints.RemoveAt(0);
-            FindObjectOfType<AudioManager>().PlayOneShot("RightWaypoint");
-            waypoints[0].nextInRace = true;
+            OnRaceOver();
         }
         else
         {
-            FindObjectOfType<AudioManager>().PlayOneShot("WrongWaypoint");
+            EnableWaypoint(crossedWaypointIndex + 1);
         }
+    }
+
+    private void EnableWaypoint(int waypointIndex)
+    {
+        waypoints[waypointIndex].SetParticleState(true);
+        waypoints[waypointIndex].gameObject.SetActive(true);
+    }
+
+    private void DisableWaypoint(int waypointIndex)
+    {
+        waypoints[waypointIndex].SetParticleState(false);
+        waypoints[waypointIndex].gameObject.SetActive(false);
     }
 
     void LoadRaceCourse()
     {
         //Load data
-        foreach(var waypointData in data.waypointsData)
+        foreach (var waypointData in data.waypointsData)
         {
             Waypoint newWaypoint = Instantiate(prefabWaypoint);
             newWaypoint.name = "Waypoint" + waypoints.Count;
@@ -65,8 +85,8 @@ public class TimeAttackHandler : MonoBehaviour
             newWaypoint.handler = this;
             newWaypoint.transform.position = waypointData.Position;
             waypoints.Add(newWaypoint);
+            DisableWaypoint(waypoints.Count -1);
         }
-        waypoints[0].nextInRace = true;
     }
 
 #if UNITY_EDITOR
@@ -96,9 +116,9 @@ public class TimeAttackHandler : MonoBehaviour
         //Clear data
         data.ClearTimeAttackData();
         //Save current list
-        foreach(var waypoint in waypoints)
+        foreach (var waypoint in waypoints)
         {
-        WaypointData currentWaypoint = new WaypointData();
+            WaypointData currentWaypoint = new WaypointData();
             currentWaypoint.Position = waypoint.transform.position;
             currentWaypoint.Radius = waypoint.waypointRadius;
             data.waypointsData.Add(currentWaypoint);
@@ -116,10 +136,10 @@ public class TimeAttackHandler : MonoBehaviour
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(waypoint.transform.position, waypoint.waypointRadius);
         }
-        for(int i= 0; i < waypoints.Count - 1; i++)
+        for (int i = 0; i < waypoints.Count - 1; i++)
         {
             Gizmos.color = Color.blue;
-            if(i == waypoints.Count -1)
+            if (i == waypoints.Count - 1)
             {
                 Gizmos.DrawLine(waypoints[i].transform.position, waypoints[0].transform.position);
             }
@@ -128,7 +148,7 @@ public class TimeAttackHandler : MonoBehaviour
                 Gizmos.DrawLine(waypoints[i].gameObject.transform.position, waypoints[i + 1].gameObject.transform.position);
             }
         }
-        
+
     }
 
 

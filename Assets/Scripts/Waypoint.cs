@@ -1,8 +1,10 @@
 using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class Waypoint : MonoBehaviour
 {
@@ -11,26 +13,18 @@ public class Waypoint : MonoBehaviour
     [SerializeField]
     public CapsuleCollider waypointCollider;
     public TimeAttackHandler handler;
-
-    public bool nextInRace = false;
     [SerializeField]
     GameObject particles;
 
     private void OnTriggerEnter(Collider other)
     {
-        handler.OnWaypointCrossed(this);
+        if (other.gameObject.CompareTag("Player"))
+            handler.OnWaypointCrossed(this);
     }
 
-    private void Update()
+    public void SetParticleState(bool enable)
     {
-        if(nextInRace == true)
-        {
-            particles.SetActive(true);
-        }
-        else
-        {
-            particles.SetActive(false);
-        }
+        particles.SetActive(enable);
     }
 
 #if UNITY_EDITOR
