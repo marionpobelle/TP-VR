@@ -3,10 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 
 public class TimeAttackHandler : MonoBehaviour
 {
+    [SerializeField]
+    Transform  Start;
+
     [SerializeField]
     TimeAttackData data;
 
@@ -19,6 +23,9 @@ public class TimeAttackHandler : MonoBehaviour
     [SerializeField]
     List<Waypoint> waypoints;
     AudioManager audioManager;
+
+    [SerializeField]
+    LineRenderer lineRenderer;
 
 
     bool isRaceStarted = false;
@@ -34,16 +41,29 @@ public class TimeAttackHandler : MonoBehaviour
     [Button]
     public void StartRace()
     {
-        if(GameManager.Instance.isRacing)
+        if(GameManager.Instance.isRacing && waypoints.Count <= 0)
         {
             return;
         }
         GameManager.Instance.ToggleRacing(true);
         isRaceStarted = true;
+        ToggleLine(true);
+        TraceLine(Start.position, waypoints[0].transform.position);
         EnableWaypoint(0);
         audioManager.PlayOneShot("StartRace");
         audioManager.PlayOneShot("Music");
         Debug.Log("Race is starting");
+    }
+
+    private void ToggleLine(bool state)
+    {
+        lineRenderer.enabled = state;
+    }
+
+    private void TraceLine(Vector3 start, Vector3 end)
+    {
+        lineRenderer.SetPosition(0, Start.position);
+        lineRenderer.SetPosition(1, waypoints[0].transform.position);
     }
 
     [Button]
@@ -53,6 +73,7 @@ public class TimeAttackHandler : MonoBehaviour
         {
             return;
         }
+        ToggleLine(false);
         GameManager.Instance.ToggleRacing(false);
         isRaceStarted = false;
         audioManager.Stop("Music");
@@ -72,6 +93,7 @@ public class TimeAttackHandler : MonoBehaviour
         }
         else
         {
+            TraceLine(waypoints[crossedWaypointIndex].transform.position, waypoints[crossedWaypointIndex+1].transform.position);
             EnableWaypoint(crossedWaypointIndex + 1);
         }
     }
