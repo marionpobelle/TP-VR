@@ -6,18 +6,17 @@ using UnityEngine;
 
 public class UIScript : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _scoreText;
     [SerializeField] private TextMeshProUGUI _timerText;
     // Start is called before the first frame update
     //void Start()
     //{
-        
+
     //}
 
     //// Update is called once per frame
     //void Update()
     //{
-        
+
     //}
 
 
@@ -26,8 +25,9 @@ public class UIScript : MonoBehaviour
         _timerText.text = TimeSpan.FromSeconds(timer).ToString("mm:ss");
     }
 
-    public void SetTimer(int score)
+    public void ToggleTimer(bool state) 
     {
-        _scoreText.text = score.ToString();
+        _timerText.enabled = state;
     }
+
 }
