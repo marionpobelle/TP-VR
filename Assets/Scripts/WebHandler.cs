@@ -32,11 +32,15 @@ public class WebHandler : MonoBehaviour
     Vector3 lastRecordedPos;
     Vector3 lastRecordedLocalPos;
 
+    AudioManager audioManager;
+
     private void Awake()
     {
         target.transform.parent = null;
         lr.transform.parent = null;
         lr.transform.position = Vector3.zero;
+
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     private void Update()
@@ -88,6 +92,8 @@ public class WebHandler : MonoBehaviour
         if (isPressed)
         {
             AttemptWebShoot();
+            int randWebSound = UnityEngine.Random.Range(0, 5);
+            audioManager.PlayOneShot("Web" + randWebSound);
         }
         else
         {

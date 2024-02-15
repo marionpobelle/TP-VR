@@ -41,6 +41,8 @@ public class TimeAttackHandler : MonoBehaviour
         GameManager.Instance.ToggleRacing(true);
         isRaceStarted = true;
         EnableWaypoint(0);
+        audioManager.PlayOneShot("StartRace");
+        audioManager.PlayOneShot("Music");
         Debug.Log("Race is starting");
     }
 
@@ -52,6 +54,7 @@ public class TimeAttackHandler : MonoBehaviour
         }
         GameManager.Instance.ToggleRacing(false);
         isRaceStarted = false;
+        audioManager.Stop("Music");
         Debug.Log("Race is over");
     }
 
