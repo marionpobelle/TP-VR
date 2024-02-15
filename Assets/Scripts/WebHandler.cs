@@ -5,9 +5,11 @@ using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 using TMPro;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class WebHandler : MonoBehaviour
 {
+    [SerializeField] XRBaseController controller;
     [SerializeField] SpringJoint joint;
     [SerializeField] Transform raycastOrigin;
     [SerializeField] Rigidbody playerRigidbody;
@@ -25,6 +27,7 @@ public class WebHandler : MonoBehaviour
     [SerializeField] float pullTolerance = 10f;
     [SerializeField] float pullStrength = 1f;
     [SerializeField] float minPullDistance = 1f;
+    [SerializeField] float vibrationStrength = .2f;
 
     bool isWebOut = false;
     bool isHoldingWeb = false;
@@ -55,6 +58,13 @@ public class WebHandler : MonoBehaviour
             Debug.DrawLine(raycastOrigin.position, target.position, Color.red);
             lr.SetPosition(0, raycastOrigin.position);
             lr.SetPosition(1, target.position);
+        }
+
+        if (isWebOut && (Vector3.Distance(playerRigidbody.transform.position, target.position) > joint.maxDistance - pullTolerance
+                && Vector3.Distance(playerRigidbody.transform.position, target.position) < joint.maxDistance + pullTolerance)
+                && playerRigidbody.velocity.sqrMagnitude > .1f)
+        {
+            controller.SendHapticImpulse(vibrationStrength, .05f);
         }
 
         if (isWebOut && isHoldingWeb)
