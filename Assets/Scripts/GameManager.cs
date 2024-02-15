@@ -42,7 +42,6 @@ public class GameManager : MonoBehaviour
     {
         isRacing = state;
         _timer = 0;
-        _timer = 0;
         UI.SetTimer(_timer);
         UI.ToggleTimer(state);
     }

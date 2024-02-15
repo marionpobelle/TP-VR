@@ -92,6 +92,7 @@ public class TimeAttackHandler : MonoBehaviour
             Waypoint newWaypoint = Instantiate(prefabWaypoint);
             newWaypoint.name = "Waypoint" + waypoints.Count;
             newWaypoint.waypointRadius = waypointData.Radius;
+            newWaypoint.transform.localScale = Vector3.one * newWaypoint.waypointRadius;
             newWaypoint.waypointCollider.radius = waypointData.Radius;
             newWaypoint.handler = this;
             newWaypoint.transform.position = waypointData.Position;

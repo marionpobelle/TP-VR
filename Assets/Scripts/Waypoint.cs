@@ -24,7 +24,7 @@ public class Waypoint : MonoBehaviour
 
     public void SetParticleState(bool enable)
     {
-        particles.SetActive(enable);
+        //particles.SetActive(enable);
     }
 
 #if UNITY_EDITOR

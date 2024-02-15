@@ -347,6 +347,7 @@ MonoBehaviour:
   raycastOrigin: {fileID: 638989523295202243}
   playerRigidbody: {fileID: 3150362389074973817}
   target: {fileID: 459520832312330003}
+  animator: {fileID: 0}
   webStrength: 8.5
   webDamper: 7
   webMassScale: 4.5
@@ -359,7 +360,6 @@ MonoBehaviour:
   pullTolerance: 10
   pullStrength: 1
   minPullDistance: 1
-  textMeshProUGUI: {fileID: 0}
 --- !u!1 &1670256624
 GameObject:
   m_ObjectHideFlags: 0
@@ -707,6 +707,7 @@ MonoBehaviour:
   raycastOrigin: {fileID: 4391267779668228620}
   playerRigidbody: {fileID: 3150362389074973817}
   target: {fileID: 7823438699789905400}
+  animator: {fileID: 0}
   webStrength: 8.5
   webDamper: 7
   webMassScale: 4.5
@@ -719,7 +720,6 @@ MonoBehaviour:
   pullTolerance: 10
   pullStrength: 1
   minPullDistance: 1
-  textMeshProUGUI: {fileID: 0}
 --- !u!1 &1680501586
 GameObject:
   m_ObjectHideFlags: 0
