@@ -343,6 +343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22262097a2b23ca449b91467f72c0e85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controller: {fileID: 3684770219787524028}
   joint: {fileID: 0}
   raycastOrigin: {fileID: 638989523295202243}
   playerRigidbody: {fileID: 3150362389074973817}
@@ -360,6 +361,7 @@ MonoBehaviour:
   pullTolerance: 10
   pullStrength: 1
   minPullDistance: 1
+  vibrationStrength: 0.2
 --- !u!1 &1670256624
 GameObject:
   m_ObjectHideFlags: 0
@@ -703,6 +705,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22262097a2b23ca449b91467f72c0e85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controller: {fileID: 1670256628}
   joint: {fileID: 0}
   raycastOrigin: {fileID: 4391267779668228620}
   playerRigidbody: {fileID: 3150362389074973817}
@@ -720,6 +723,7 @@ MonoBehaviour:
   pullTolerance: 10
   pullStrength: 1
   minPullDistance: 1
+  vibrationStrength: 0.2
 --- !u!1 &1680501586
 GameObject:
   m_ObjectHideFlags: 0

@@ -29,8 +29,8 @@ public class WebHandler : MonoBehaviour
     [SerializeField] float minPullDistance = 1f;
     [SerializeField] float vibrationStrength = .2f;
 
-    bool isWebOut = false;
-    public bool isHoldingWeb{ get; private set; }
+    public bool isWebOut { get; private set; }
+    bool isHoldingWeb;
     Vector3 pullStartPos;
     Vector3 lastRecordedPos;
     Vector3 lastRecordedLocalPos;
@@ -103,8 +103,6 @@ public class WebHandler : MonoBehaviour
         if (isPressed)
         {
             AttemptWebShoot();
-            int randWebSound = UnityEngine.Random.Range(0, 5);
-            audioManager.PlayOneShot("Web" + randWebSound);
         }
         else
         {
@@ -150,6 +148,9 @@ public class WebHandler : MonoBehaviour
             lr.SetPosition(0, raycastOrigin.position);
             lr.SetPosition(1, target.position);
             animator.SetBool("IsWebOut", true);
+
+            int randWebSound = UnityEngine.Random.Range(0, 5);
+            audioManager.PlayOneShot("Web" + randWebSound);
         }
         else
         {
