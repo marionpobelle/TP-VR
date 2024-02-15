@@ -46,14 +46,56 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds:
   - name: RightWaypoint
-    clip: {fileID: 8300000, guid: 084f46883dc966d41b92cfd10c5ca3f1, type: 3}
+    clip: {fileID: 8300000, guid: 146b332e8d8ddf749a911c3302be68a9, type: 3}
     volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
-  - name: WrongWaypoint
-    clip: {fileID: 8300000, guid: 1c0175219e282274985abcaad4ab35aa, type: 3}
+  - name: Music
+    clip: {fileID: 8300000, guid: f6fbdc53df51c084685cc973713d0411, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: Web0
+    clip: {fileID: 8300000, guid: 885c772a0a7679541812fc5b4e9013b9, type: 3}
     volume: 1
     pitch: 1
     loop: 0
+    source: {fileID: 0}
+  - name: Web1
+    clip: {fileID: 8300000, guid: d4832318aec06e049bc7f7696a52ba53, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Web2
+    clip: {fileID: 8300000, guid: b1bb94380b49e984c9d42e88470fc9ff, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Web3
+    clip: {fileID: 8300000, guid: 17ea87ee962726545aa0be2f900fcf5e, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Web4
+    clip: {fileID: 8300000, guid: eea887807c85386409f25139eb62f542, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: StartRace
+    clip: {fileID: 8300000, guid: 863d4fe73d7f4e74fb1cdd12f0f61f2d, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: WindSFX
+    clip: {fileID: 8300000, guid: e41915a08afb6eb4a9bd8600aa183352, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
     source: {fileID: 0}

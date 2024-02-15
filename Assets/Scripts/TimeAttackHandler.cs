@@ -41,6 +41,8 @@ public class TimeAttackHandler : MonoBehaviour
         GameManager.Instance.ToggleRacing(true);
         isRaceStarted = true;
         EnableWaypoint(0);
+        audioManager.PlayOneShot("StartRace");
+        audioManager.PlayOneShot("Music");
         Debug.Log("Race is starting");
     }
 
@@ -53,6 +55,7 @@ public class TimeAttackHandler : MonoBehaviour
         }
         GameManager.Instance.ToggleRacing(false);
         isRaceStarted = false;
+        audioManager.Stop("Music");
         Debug.Log("Race is over");
     }
 
@@ -94,7 +97,6 @@ public class TimeAttackHandler : MonoBehaviour
             newWaypoint.name = "Waypoint" + waypoints.Count;
             newWaypoint.waypointRadius = waypointData.Radius;
             newWaypoint.transform.localScale = Vector3.one * newWaypoint.waypointRadius;
-            newWaypoint.waypointCollider.radius = waypointData.Radius;
             newWaypoint.handler = this;
             newWaypoint.transform.position = waypointData.Position;
             waypoints.Add(newWaypoint);
@@ -109,18 +111,10 @@ public class TimeAttackHandler : MonoBehaviour
         Waypoint newWaypoint = Instantiate(prefabWaypoint);
         newWaypoint.name = "Waypoint" + waypoints.Count;
         newWaypoint.waypointRadius = defaultWaypointRadius;
-        newWaypoint.waypointCollider.radius = newWaypoint.waypointRadius;
         newWaypoint.handler = this;
 
         waypoints.Add(newWaypoint);
         Selection.activeGameObject = newWaypoint.gameObject;
-    }
-
-    [Button("Remove last waypoint")]
-    private void RemoveLastWaypointFromRace()
-    {
-        DestroyImmediate(waypoints[waypoints.Count - 1].gameObject);
-        waypoints.RemoveAt(waypoints.Count - 1);
     }
 
     [Button("Save race course")]
@@ -147,7 +141,7 @@ public class TimeAttackHandler : MonoBehaviour
         foreach (var waypoint in waypoints)
         {
             Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(waypoint.transform.position, waypoint.waypointRadius);
+            Gizmos.DrawWireSphere(waypoint.transform.position, waypoint.waypointRadius / 2);
         }
         for (int i = 0; i < waypoints.Count - 1; i++)
         {
