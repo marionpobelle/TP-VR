@@ -124,7 +124,6 @@ MonoBehaviour:
   waypointRadius: 1
   waypointCollider: {fileID: 2747008378286154794}
   handler: {fileID: 0}
-  nextInRace: 0
   particles: {fileID: 4429225960290986962}
 --- !u!1 &4429225960290986962
 GameObject:
