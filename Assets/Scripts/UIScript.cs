@@ -1,11 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class UIScript : MonoBehaviour
 {
+    [SerializeField] private GameObject _go;
     [SerializeField] private TextMeshProUGUI _timerText;
 
     public void SetTimer(float timer)
@@ -15,7 +14,7 @@ public class UIScript : MonoBehaviour
 
     public void ToggleTimer(bool state) 
     {
-        _timerText.enabled = state;
+        _go.SetActive(state);
     }
 
 }
