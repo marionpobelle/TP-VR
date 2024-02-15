@@ -53,7 +53,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Music
     clip: {fileID: 8300000, guid: f6fbdc53df51c084685cc973713d0411, type: 3}
-    volume: 0.3
+    volume: 0.5
     pitch: 1
     loop: 1
     source: {fileID: 0}
@@ -95,6 +95,12 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: WindSFX
     clip: {fileID: 8300000, guid: e41915a08afb6eb4a9bd8600aa183352, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: EndRace
+    clip: {fileID: 8300000, guid: 61cd3cefe4266ad45825ae9cf93f0037, type: 3}
     volume: 1
     pitch: 1
     loop: 1
