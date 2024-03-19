@@ -2,7 +2,7 @@
 
 <p align="center">
   <img src="screenshots/gameplay1.png" width="300" title="">
-  <img src="screenshots/gameplay_1.png" width="300" title="">
+  <img src="screenshots/gameplay2.png" width="300" title="">
   <img src="screenshots/webspitting.png" width="300" title="">
   <img src="screenshots/citydesign.png" width="300" title="">
 </p>
