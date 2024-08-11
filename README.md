@@ -12,33 +12,22 @@ The following plug-ins were used :
 
 ## Demo
 
-https://github.com/user-attachments/assets/72b4a024-a13d-4567-98c0-705d92f2e369
+TO DO
 
 ## Features  
+  
+- [x] CONTROLLER
+- - [x] Fluid VR controller
+- - [x] Web-shooting mechanic
+- - [x] Pulling mechanic
+- - [x] Haptic feedbacks
 
 - [x] GAMEPLAY
-- - [x] Flashlight item
-- - [x] Collectable items
-- - [x] Follower enemy AI
-- - - [x] AI spawns at random position
-
-- [x] OTHER
-- - [x] Nighttime setting
-- - [x] Win & Lose conditions
-
-- [x] UI
-- - [x] HUD
-- - [x] Menus
+- - [x] Race system
+- - - [x] Waypoints
 
 - [x] AUDIO
-- - [x] SFX triggers
+- - [x] SFX
 - - [x] Ambient audio
 
 
-
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-For this game we realised : 
-- A fluid VR player controller where you can shoot webs with your hands in any direction, pull yourself with the webs
-- A race systems with waypoints you need to go to troughout the map
-- Multiple feedbacks with the controller and audio cues
-  
