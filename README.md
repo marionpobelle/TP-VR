@@ -1,7 +1,8 @@
 # TP - VR
 ## Summary
 
-A VR spider-man like race game, result of a 3 days workshop with the objective to create a VR interactive experience.
+A VR spider-man like racing game, result of a 3 days workshop with the objective to create a VR interactive experience.
+Players can shoot webs from both hands, hold on to scenery and swing through the city to get around.
 
 ## Development
 
